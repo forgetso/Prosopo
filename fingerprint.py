@@ -6,8 +6,6 @@ from cryptography.hazmat.primitives import hashes
 import base64, time, math, json
 
 
-# RSA-OAEP
-
 def encrypt(plaintext: str) -> str:
     public_key_b64 = """
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoa1QCkVvFAfv+fgFpjfq
