@@ -34,7 +34,7 @@ class Prosopo:
             "user": self.account.public_key,
         }
 
-        res = self.session.post("https://pronode4old.prosopo.io/v1/prosopo/provider/client/captcha/frictionless",
+        res = self.session.post("https://staging-pronode2.prosopo.io/v1/prosopo/provider/client/captcha/frictionless",
                                 json=payload)
 
         print(res.text)
@@ -49,7 +49,7 @@ class Prosopo:
             "sessionId": res.json()["sessionId"],
         }
 
-        res = self.session.post("https://pronode4old.prosopo.io/v1/prosopo/provider/client/captcha/pow", json=payload)
+        res = self.session.post("https://staging-pronode2.prosopo.io/v1/prosopo/provider/client/captcha/pow", json=payload)
 
         if(res.status_code != 200):
             print(res.status_code)
@@ -76,7 +76,7 @@ class Prosopo:
             "verifiedTimeout": 120000
         }
 
-        res = self.session.post("https://pronode4old.prosopo.io/v1/prosopo/provider/client/pow/solution", json=payload)
+        res = self.session.post("https://staging-pronode2.prosopo.io/v1/prosopo/provider/client/pow/solution", json=payload)
         print(res.text)
 
 
