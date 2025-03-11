@@ -12,7 +12,7 @@ class Prosopo:
         self.session.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/120.0",
             "Accept": "*/*",
-            "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
+            "Accept-Language": "en-GB,en-US;q=0.7,en;q=0.3",
             "Referer": f"{host}/",
             "Content-Type": "application/json",
             "Prosopo-Site-Key": self.site_key,
@@ -26,14 +26,22 @@ class Prosopo:
         }
 
     def solve(self):
+        # response = self.session.get("https://https://pronode4old.prosopo.io.prosopo.io/test")
+
         payload = {
             "token": generate_token(),
             "dapp": self.site_key,
             "user": self.account.public_key,
         }
 
-        res = self.session.post("https://pronode12.prosopo.io/v1/prosopo/provider/client/captcha/frictionless",
+        res = self.session.post("https://pronode4old.prosopo.io/v1/prosopo/provider/client/captcha/frictionless",
                                 json=payload)
+
+        print(res.text)
+
+        if(res.status_code != 200):
+            print(res.status_code)
+            return
 
         payload = {
             "user": self.account.public_key,
@@ -41,7 +49,12 @@ class Prosopo:
             "sessionId": res.json()["sessionId"],
         }
 
-        res = self.session.post("https://pronode12.prosopo.io/v1/prosopo/provider/client/captcha/pow", json=payload)
+        res = self.session.post("https://pronode4old.prosopo.io/v1/prosopo/provider/client/captcha/pow", json=payload)
+
+        if(res.status_code != 200):
+            print(res.status_code)
+            return
+
         pow_challenge = res.json()
 
         solved = self.account.signMessage(pow_challenge["timestamp"])
@@ -63,9 +76,9 @@ class Prosopo:
             "verifiedTimeout": 120000
         }
 
-        res = self.session.post("https://pronode12.prosopo.io/v1/prosopo/provider/client/pow/solution", json=payload)
+        res = self.session.post("https://pronode4old.prosopo.io/v1/prosopo/provider/client/pow/solution", json=payload)
         print(res.text)
 
 
 if __name__ == "__main__":
-    Prosopo("https://prosopo.io", "5C7bfXYwachNuvmasEFtWi9BMS41uBvo6KpYHVSQmad4nWzw").solve()
+    Prosopo("https://prosopo.io", "5GYr811LSaCUP4JmDDKBaY56ZSCAXDkQXxoBdnmuwurHThvP").solve()
